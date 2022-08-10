@@ -1,0 +1,15 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "simple server for shopify project",
+  "main": "server.js",
+  "author": "danimadmolil",
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/client": "^4.2.1",
+    "express": "^4.18.1",
+    "md5": "^2.3.0",
+    "nodemon": "^2.0.19",
+    "sqlite3": "^5.0.11"
+  }
+}
