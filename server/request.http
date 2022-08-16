@@ -1,0 +1,36 @@
+//create user post request
+POST http://127.0.0.1:4000/user HTTP/1.1
+content-type: application/json
+
+{
+    
+    "name": "sample",
+    "email": "Wed, 21 Oct 2015 18:27:50 GMT",
+    "password":"12345"
+}
+
+###
+//delete a user
+DELETE http://127.0.0.1:4000/user/6 HTTP/1.1
+
+###
+//create category
+POST http://127.0.0.1:4000/user/6 HTTP/1.1
+content-type: application/json
+
+{
+    
+    "name": "",
+}
+
+###
+POST http://127.0.0.1:4000/menu HTTP/1.1
+content-type: application/json
+
+{
+    "title": "ddr3"
+}
+
+###
+GET http://127.0.0.1:4000/menu HTTP/1.1
+content-type: application/json
