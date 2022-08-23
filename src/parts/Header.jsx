@@ -17,6 +17,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import Tooltip from "@mui/material/Tooltip";
 import Avatar from "@mui/material/Avatar";
+import { Link } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -99,8 +100,19 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <Link to="/signin">SignIn</Link>
+      </MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <Link style={{}} to={"/signup"}>
+          Signup
+        </Link>
+      </MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <Link style={{}} to={"/profile"}>
+          Profile
+        </Link>
+      </MenuItem>
     </Menu>
   );
 

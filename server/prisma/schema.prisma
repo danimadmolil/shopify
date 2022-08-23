@@ -56,3 +56,10 @@ model Menu {
   subMenu       Menu[] @relation("parentSubCategory")
   parrentMenuId Int?
 }
+
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String
+  expiresAt DateTime
+}
