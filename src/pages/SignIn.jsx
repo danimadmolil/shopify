@@ -14,9 +14,15 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../constant/constants";
+import useUser from "../hooks/useUser";
+import { setItemWithExpire } from "../utils/localStorage";
 const theme = createTheme();
 
 export default function SignIn() {
+  const { user, setUser, isAuthenticated } = useUser();
+  console.log("user", user);
+  console.log("setUser", setUser);
+  // const [user, isAuthenticated, checkAuth] = useUser();
   const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -36,6 +42,10 @@ export default function SignIn() {
       .then((res) => res.json())
       .then((res) => {
         if (!res.error) {
+          const loginExpires = 60 * 60 * 60;
+          setItemWithExpire("isAuthenticated", true, loginExpires);
+          setItemWithExpire("user", res.user, loginExpires);
+          setUser({ ...res.user });
           navigate({ pathname: "/" });
         }
       });

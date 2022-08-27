@@ -114,28 +114,35 @@ app.post("/menu", async (req, res) => {
   // console.log("prisma", req.body);
   res.jsonp(result);
 });
-app.get("/profile", authMiddleware, async (req, res) => {
-  if (req.headers.user) {
-    res.send(req.headers.user);
+app.post("/profile", authMiddleware, async (req, res) => {
+  const authToken = req.body.Authorization;
+  if (authToken) {
+    try {
+      const user = jwt.verify(authToken, process.env.JWT_SECRET_KEY);
+      res.send({ user });
+    } catch (e) {
+      res.send({ error: "please login, your token expired!" });
+    }
   } else {
-    res.send("you need to authenticated first :) ");
+    res.send({ error: "please login again" });
   }
 });
 app.post("/signin", async (req, res) => {
   const { email, password } = req.body;
   console.log("signin", req.body.email);
-  const user = await prisma.user.findMany({ where: { email, password } });
+  let user = await prisma.user.findMany({ where: { email, password } });
+  user = user[0];
   const authToken = jwt.sign({ email, password }, process.env.JWT_SECRET_KEY, {
     expiresIn: "2h",
   });
-  res.cookie("Authorization", authToken, {
-    httpOnly: true,
-    maxAge: 60 * 60 * 2 * 1000,
-    sameSite: "none",
-    path: "/",
-    secure: true,
-  });
-  res.send({ user, error: false });
+  // res.cookie("Authorization", authToken, {
+  //   httpOnly: true,
+  //   maxAge: 60 * 60 * 2 * 1000,
+  //   sameSite: "none",
+  //   path: "/",
+  //   secure: true,
+  // });
+  res.send({ user: { ...user, Authorization: authToken }, error: false });
 });
 app.post("/signup", async (req, res) => {
   const { email, password, name } = req.body;
